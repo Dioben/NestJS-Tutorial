@@ -57,7 +57,6 @@ export class TaskRepository {
         ),
       );
     }
-    console.log(query.getSql());
     return query.getMany();
   }
 }
