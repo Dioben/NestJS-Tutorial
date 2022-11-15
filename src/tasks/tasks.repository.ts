@@ -7,38 +7,38 @@ import { Task } from './dto/task.entity';
 import { TaskStatus } from './task-status.enum';
 
 @Injectable()
-export class TaskRepository {
+export class TasksRepository {
   constructor(
-    @InjectRepository(Task) private taskRepository: Repository<Task>,
+    @InjectRepository(Task) private tasksRepository: Repository<Task>,
   ) {}
   async findTaskByID(id: string): Promise<Task> {
-    return await this.taskRepository.findOneBy({ id: id });
+    return await this.tasksRepository.findOneBy({ id: id });
   }
   async createTask(createTaskDTO: CreateTaskDTO): Promise<Task> {
     const { title, description } = createTaskDTO;
-    const task = this.taskRepository.create({
+    const task = this.tasksRepository.create({
       title: title,
       description: description,
     });
-    await this.taskRepository.save(task);
+    await this.tasksRepository.save(task);
     return task;
   }
 
   async removeTaskByID(id: string): Promise<boolean> {
-    const result = await this.taskRepository.delete(id);
+    const result = await this.tasksRepository.delete(id);
     return result.affected > 0;
   }
   async updateTaskByID(id: string, status: TaskStatus): Promise<Task> {
     const task = await this.findTaskByID(id);
     if (task) {
       task.status = status;
-      this.taskRepository.save(task);
+      this.tasksRepository.save(task);
     }
     return task;
   }
   async getTasks(filterDTO: GetTasksFilterDTO): Promise<Task[]> {
     const { status, search } = filterDTO;
-    const query = this.taskRepository.createQueryBuilder('task');
+    const query = this.tasksRepository.createQueryBuilder('task');
 
     if (status) {
       query.andWhere('task.status = :status', { status: status });
