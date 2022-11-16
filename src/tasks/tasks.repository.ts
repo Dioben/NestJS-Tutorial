@@ -4,11 +4,11 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/auth/user.entity';
+import { User } from '../auth/user.entity';
 import { Brackets, Repository } from 'typeorm';
 import { CreateTaskDTO } from './dto/crerate-task-dto';
 import { GetTasksFilterDTO } from './dto/get-tasks-filter.dto';
-import { Task } from './dto/task.entity';
+import { Task } from './task.entity';
 import { TaskStatus } from './task-status.enum';
 
 @Injectable()
